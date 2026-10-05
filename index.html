@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Pro - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body class="login-page">
+  <main class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo">📦</div>
+        <h1>Inventory Pro</h1>
+        <p>Secure System Access</p>
+      </div>
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autocomplete="username">
+          <span class="error-msg" id="usernameError"></span>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password">
+          <span class="error-msg" id="passwordError"></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Sign In</button>
+      </form>
+      <div class="login-footer">
+        <p>Demo Credentials: <strong>admin / password123</strong></p>
+      </div>
+    </div>
+  </main>
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

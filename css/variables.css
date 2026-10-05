@@ -1,0 +1,55 @@
+/* FILE: css/variables.css */
+:root {
+  --color-primary: hsl(239, 84%, 67%);
+  --color-success: hsl(142, 76%, 36%);
+  --color-warning: hsl(38, 92%, 50%);
+  --color-danger: hsl(0, 84%, 60%);
+  
+  --color-neutral-50: hsl(220, 14%, 95%);
+  --color-neutral-100: hsl(220, 14%, 90%);
+  --color-neutral-200: hsl(220, 14%, 80%);
+  --color-neutral-300: hsl(220, 14%, 70%);
+  --color-neutral-400: hsl(220, 14%, 60%);
+  --color-neutral-500: hsl(220, 14%, 50%);
+  --color-neutral-600: hsl(220, 14%, 40%);
+  --color-neutral-700: hsl(220, 14%, 30%);
+  --color-neutral-800: hsl(220, 14%, 20%);
+  --color-neutral-900: hsl(220, 14%, 10%);
+
+  --font-family: 'Inter', sans-serif;
+  
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 30px;
+  --font-size-3xl: 36px;
+  
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 24px;
+  
+  --shadow-sm: 0 1px 2px 0 hsl(220 14% 4% / 0.05);
+  --shadow-md: 0 4px 6px -1px hsl(220 14% 4% / 0.1);
+  --shadow-lg: 0 10px 15px -3px hsl(220 14% 4% / 0.1);
+
+  --z-dropdowns: 10;
+  --z-sticky: 20;
+  --z-modals: 30;
+  --z-toast: 40;
+  --z-loading: 50;
+}

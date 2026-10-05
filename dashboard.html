@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Pro - Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body class="app-body">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand" onclick="window.location.hash='#dashboard'" style="cursor: pointer;">
+      <div class="logo">📦</div>
+      <span>Inventory Pro</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#dashboard" class="nav-link" data-route="dashboard">Dashboard</a>
+      <a href="#inventory" class="nav-link" data-route="inventory">Inventory</a>
+      <a href="#add" class="nav-link" data-route="add">Add Product</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-profile" onclick="alert('Profile settings coming soon!')" style="cursor: pointer;" title="Profile Settings">
+        <div class="avatar">A</div>
+        <span>Admin User</span>
+      </div>
+      <div>
+        <button id="resetDataBtn" class="btn btn-text" style="font-size:12px; margin-right:8px;" title="Reset Demo Data">🔄</button>
+        <button id="logoutBtn" class="btn btn-text">Logout</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      <div class="global-search">
+        <input type="text" id="globalSearch" placeholder="Quick search products..." />
+      </div>
+      <div class="topbar-actions">
+        <a href="#add" class="btn btn-primary btn-sm">Add Product</a>
+      </div>
+    </header>
+
+    <div id="viewContainer" class="view-container">
+      <!-- Views injected here by app.js router -->
+    </div>
+  </main>
+
+  <!-- Modals & Toasts Container -->
+  <div id="modalContainer"></div>
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Templates (hidden) -->
+  <template id="tpl-dashboard">
+    <div class="view-dashboard">
+      <h2 class="view-title">Dashboard Overview</h2>
+      <div class="stats-grid" id="dashboardStats"></div>
+      <div class="dashboard-content">
+        <div class="card alerts-card">
+          <div class="card-header">
+            <h3>Items Requiring Attention</h3>
+          </div>
+          <div class="card-body" id="dashboardAlerts"></div>
+        </div>
+        <div class="card activity-card">
+          <div class="card-header">
+            <h3>Recent Activity</h3>
+          </div>
+          <div class="card-body">
+            <ul class="activity-feed" id="dashboardActivity"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-inventory">
+    <div class="view-inventory">
+      <div class="view-header">
+        <h2 class="view-title">Inventory Management</h2>
+        <button id="exportCsvBtn" class="btn btn-secondary">Export CSV</button>
+      </div>
+      <div class="card table-card">
+        <div class="filters-bar">
+          <input type="text" id="invSearch" placeholder="Search by name or SKU...">
+          <select id="invCategoryFilter">
+            <option value="all">All Categories</option>
+            <option value="electronics">Electronics</option>
+            <option value="clothing">Clothing</option>
+            <option value="food">Food</option>
+            <option value="office">Office</option>
+            <option value="other">Other</option>
+          </select>
+          <select id="invStatusFilter">
+            <option value="all">All Status</option>
+            <option value="in_stock">In Stock</option>
+            <option value="low_stock">Low Stock</option>
+            <option value="out_of_stock">Out of Stock</option>
+          </select>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-sort="name">Product Name ⇅</th>
+                <th>Category</th>
+                <th data-sort="quantity">Quantity ⇅</th>
+                <th data-sort="unitCost">Unit Cost ⇅</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination-container" id="inventoryPagination"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-product-form">
+    <div class="view-product-form">
+      <h2 class="view-title" id="formTitle">Add Product</h2>
+      <div class="card form-card" style="padding: 24px;">
+        <form id="productForm">
+          <input type="hidden" id="productId">
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="productName">Product Name*</label>
+              <input type="text" id="productName" required minlength="2" maxlength="100">
+            </div>
+            <div class="form-group half">
+              <label for="productSku">SKU*</label>
+              <input type="text" id="productSku" required minlength="3" maxlength="20" style="text-transform: uppercase;">
+              <span class="help-text">Must be unique</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="productCategory">Category*</label>
+              <select id="productCategory" required>
+                <option value="">Select category</option>
+                <option value="electronics">Electronics</option>
+                <option value="clothing">Clothing</option>
+                <option value="food">Food</option>
+                <option value="office">Office</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group half">
+              <label for="productLocation">Location</label>
+              <input type="text" id="productLocation" maxlength="50" placeholder="e.g., Warehouse A, Shelf 3">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group third">
+              <label for="productQuantity">Current Quantity*</label>
+              <input type="number" id="productQuantity" required min="0">
+            </div>
+            <div class="form-group third">
+              <label for="productMinStock">Minimum Stock Level*</label>
+              <input type="number" id="productMinStock" required min="1">
+              <span class="help-text">Alert when stock falls below this</span>
+            </div>
+            <div class="form-group third">
+              <label for="productUnitCost">Unit Cost ($)*</label>
+              <input type="number" id="productUnitCost" required min="0" step="0.01">
+            </div>
+          </div>
+          <div class="form-actions" style="margin-top: 24px; text-align: right;">
+            <button type="button" class="btn btn-secondary" id="cancelFormBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="saveProductBtn">Save Product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </template>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
